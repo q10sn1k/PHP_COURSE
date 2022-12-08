@@ -1,0 +1,21 @@
+body
+{
+    background-color: deepskyblue;
+}
+
+h2
+{
+    color: darkorange;
+}
+
+h2.firstCSSclass
+{
+    color: indigo;
+    font-family: "Arial Black";
+}
+
+p.pClass
+{
+    color: red;
+    font-family: Serif;
+}
