@@ -13,53 +13,58 @@
 
 
 ```php
+<?php
 // Определение базового класса Animal
 class Animal {
-  // Публичное свойство
-  public $name;
+    // Публичное свойство
+    public $name;
 
-  // Защищенное свойство
-  protected $sound;
+    // Защищенное свойство
+    protected $sound;
 
-  // Приватное свойство
-  private $age;
+    // Приватное свойство
+    private $age;
 
-  // Публичный метод
-  public function makeSound() {
-    echo $this->sound;
-  }
+    // Публичный метод
+    public function makeSound() {
+        echo $this->sound;
+    }
 
-  // Защищенный метод
-  protected function sleep() {
-    echo "Животное спит";
-  }
+    // Защищенный метод
+    protected function sleep() {
+        echo "Животное спит";
+    }
 
-  // Приватный метод
-  private function eat() {
-    echo "Животное ест";
-  }
+    // Приватный метод
+    private function eat() {
+        echo "Животное ест";
+    }
 }
 
 // Определение класса Cat, который наследует свойства и методы от базового класса Animal
 class Cat extends Animal {
-  // Публичный метод, который использует защищенное свойство и защищенный метод базового класса
-  public function play() {
-    echo $this->name . " играет и издает звук: ";
-    $this->makeSound();
-    echo "<br>";
-    $this->sleep();
-  }
+    public function __construct(string $name, string $sound) {
+        $this->name = $name;
+        $this->sound = $sound;
+    }
+
+    // Публичный метод, который использует защищенное свойство и защищенный метод базового класса
+    public function play() {
+        echo $this->name . " играет и издает звук: ";
+        $this->makeSound();
+        echo "<br>";
+        $this->sleep();
+    }
 }
 
 // Создание объекта класса Cat и использование публичного свойства и метода
-$cat = new Cat();
-$cat->name = "Кошка";
-$cat->sound = "Мяу!";
+$cat = new Cat("Кошка", "Мяу!");
 $cat->play();
 
 // Ошибка доступа к приватному свойству и методу
 //$cat->age = 3;
 //$cat->eat();
+
 
 ```
 
@@ -75,33 +80,35 @@ __________________________
 Создадим класс Square, который будет наследоваться от класса Rectangle и иметь дополнительный публичный метод setSide(), устанавливающий значение стороны квадрата.
 
 ```php
+<?php
+
 class Rectangle {
-  protected $width;
-  protected $height;
+    protected $width;
+    protected $height;
 
-  public function getArea() {
-    return $this->width * $this->height;
-  }
+    public function __construct($width, $height) {
+        $this->width = $width;
+        $this->height = $height;
+    }
 
-  public function getPerimeter() {
-    return 2 * ($this->width + $this->height);
-  }
+    public function getArea() {
+        return $this->width * $this->height;
+    }
+
+    public function getPerimeter() {
+        return 2 * ($this->width + $this->height);
+    }
 }
 
 class Square extends Rectangle {
-  public function setSide($side) {
-    $this->width = $side;
-    $this->height = $side;
-  }
+    public function __construct($side) {
+        parent::__construct($side, $side);
+    }
 }
 
 // Создаем объекты классов Rectangle и Square
-$rectangle = new Rectangle();
-$rectangle->width = 10;
-$rectangle->height = 5;
-
-$square = new Square();
-$square->setSide(6);
+$rectangle = new Rectangle(10, 5);
+$square = new Square(6);
 
 // Выводим на экран результаты расчета площади и периметра
 echo "Площадь прямоугольника: " . $rectangle->getArea() . "<br>";
@@ -109,6 +116,7 @@ echo "Периметр прямоугольника: " . $rectangle->getPerimete
 
 echo "Площадь квадрата: " . $square->getArea() . "<br>";
 echo "Периметр квадрата: " . $square->getPerimeter();
+
 
 
 ```
@@ -121,41 +129,52 @@ __________________________
 
 
 ```php
+<?php
+
 class Person {
-  protected $name;
-  protected $age;
+    protected $name;
+    protected $age;
 
-  public function getInfo() {
-    return "Имя: " . $this->name . ", Возраст: " . $this->age;
-  }
+    public function getInfo() {
+        return "Имя: " . $this->name . ", Возраст: " . $this->age;
+    }
 
-  public function setAge($age) {
-    $this->age = $age;
-  }
+    public function setAge($age) {
+        $this->age = $age;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
 }
 
 class Student extends Person {
-  protected $course;
+    private $course;
 
-  public function getCourse() {
-    return "Курс: " . $this->course;
-  }
+    public function getCourse() {
+        return "Курс: " . $this->course;
+    }
+
+    public function setCource($course) {
+        $this->course = $course;
+    }
 }
 
 // Создаем объекты классов Person и Student
 $person = new Person();
-$person->name = "Иван";
+$person->setName("Иван");
 $person->setAge(30);
 
 $student = new Student();
-$student->name = "Анна";
+$student->setName("Анна");
 $student->setAge(20);
-$student->course = 2;
+$student->setCource(2);
 
 // Выводим на экран информацию о человеке и студенте
 echo $person->getInfo() . "<br>";
 echo $student->getInfo() . "<br>";
-echo $student->name; // Не выведется, т.к. свойство protected в классе Person
+// Используем защищенное свойство через публичный метод
+// echo $student->name; // Не выведется, т.к. свойство protected в классе Person
 ```
 
 __________________________
@@ -167,6 +186,8 @@ __________________________
 Напишем наследуемый от него класс ElectricCar, который будет добавлять свойство batteryLife и методы setBatteryLife() и getBatteryLife() для установки и получения значения заряда батареи.
 
 ```php
+<?php
+
 class Car {
   // Свойства класса
   protected $model;

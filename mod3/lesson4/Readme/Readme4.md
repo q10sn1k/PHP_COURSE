@@ -21,6 +21,8 @@
 Абстрактный метод также определяется с помощью ключевого слова abstract.
 
 ```php
+<?php
+
 abstract class Animal {
   // Свойства класса
   public $name;
@@ -49,7 +51,7 @@ $cat->run(); // Выведет "Бежит"
 
 ```
 
-# Интерфейсы в PHP 
+# Интерфейсы в PHP
 
 Интерфейс - это набор методов без реализации, которые должны быть реализованы в классе-наследнике.\
 Он определяет только сигнатуры методов и не содержит каких-либо реализаций.
@@ -62,6 +64,8 @@ $cat->run(); // Выведет "Бежит"
 Таким образом, интерфейсы позволяют организовать взаимодействие между классами, не требуя наследования от нескольких классов, что повышает гибкость и поддерживаемость кода.
 
 ```php
+<?php
+
 interface Vehicle {
   // Vehicle - транспортное средство
   // Методы интерфейса
@@ -92,20 +96,22 @@ $car->stop(); // Выведет "Автомобиль заглушен"
 
 
 ```php
+<?php
+
 abstract class Vehicle {
-  protected $model;
+    protected $model;
 
-  public function __construct($model) {
-    $this->model = $model;
-  }
+    public function __construct($model) {
+        $this->model = $model;
+    }
 
-  abstract public function drive();
+    abstract public function drive();
 }
 
 class Car extends Vehicle {
-  public function drive() {
-    echo $this->model . " едет по дороге.";
-  }
+    public function drive() {
+        echo $this->model . " едет по дороге.";
+    }
 }
 
 $car = new Car("BMW");
@@ -121,22 +127,24 @@ $car->drive();
 При этом, класс должен реализовать все методы, определенные в интерфейсах.
 
 ```php
+<?php
+
 interface Animal {
-  public function makeSound();
+    public function makeSound();
 }
 
 interface Bird {
-  public function fly();
+    public function fly();
 }
 
 class Eagle implements Animal, Bird {
-  public function makeSound() {
-    echo "Звук орла!";
-  }
+    public function makeSound() {
+        echo "Звук орла!";
+    }
 
-  public function fly() {
-    echo "Орел летит.";
-  }
+    public function fly() {
+        echo "Орел летит.";
+    }
 }
 
 $eagle = new Eagle();
