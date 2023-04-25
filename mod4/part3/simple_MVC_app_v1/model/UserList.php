@@ -1,5 +1,8 @@
 <?php
 
+require_once 'config.php';
+require_once 'model/User.php';
+
 class UserList
 {   
     // Объявляем переменную $pdo, которую используем для подключения к базе данных
@@ -58,7 +61,7 @@ class UserList
         foreach ($rows as $row)
         {
             // создаем объект User и добавляем его в массив $users
-            $users = new User($row['id'], $row['name'], $row['surname'], $row['email']);
+            $users[] = new User($row['id'], $row['name'], $row['surname'], $row['email']);
         }
 
         // возвращаем массив объектов User
